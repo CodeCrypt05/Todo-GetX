@@ -52,7 +52,35 @@ class AddTaskController extends GetxController {
     }
   }
 
-  Future<void> onAddTaskClicked(BuildContext context) async {
+  // Check selected time
+  void checkDateTime(BuildContext context, bool bellIc) async {
+    DateTime currentDate = DateTime.now();
+    DateTime selectedDateTime = DateTime(
+        selectedDate.value.year,
+        selectedDate.value.month,
+        selectedDate.value.day,
+        selectedTime.value.hour,
+        selectedTime.value.minute);
+
+    // Check if selected time is 5 minutes greater than the current time
+    if (selectedDateTime.isAfter(currentDate.add(Duration(minutes: 5)))) {
+      // Do something if the condition is met
+      print('Selected time is greater than 5 minutes from the current time.');
+      await onAddTaskClicked(context, bellIc);
+    } else {
+      // Handle the case where the condition is not met
+      Get.snackbar('Error',
+          'Selected time should be 5 minutes greater than current time.');
+    }
+
+    // Check if the selected date and time are in the past
+    if (selectedDateTime.isBefore(currentDate)) {
+      Get.snackbar(
+          'Error', 'Selected date and time should not be in the past.');
+    }
+  }
+
+  Future<void> onAddTaskClicked(BuildContext context, bool? bellIC) async {
     print("current time:${currentTime}");
     if (taskFormKey.currentState!.validate()) {
       try {
@@ -74,7 +102,9 @@ class AddTaskController extends GetxController {
           'isCompleted': false,
           'date': date,
           'time': selectedTime.value.format(context),
-          'currentTime': DateFormat('HH:mm:ss').format(DateTime.now()),
+          'taskId': DateFormat('HH:mm:ss').format(DateTime.now()),
+          'bellIC': bellIC,
+          'timeStamp': selectedDate.value,
         });
 
         Get.snackbar(

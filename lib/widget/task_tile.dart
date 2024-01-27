@@ -17,6 +17,7 @@ class TaskTile extends StatefulWidget {
     required String documentId,
     required this.currentTime,
     required this.currentDate,
+    required this.bellIc,
   });
 
   final String taskName;
@@ -26,6 +27,7 @@ class TaskTile extends StatefulWidget {
   Function(bool?)? onChanged;
   final String? docId;
   final Function onDelete;
+  final bool bellIc;
 
   @override
   State<TaskTile> createState() => _TaskTileState();
@@ -83,6 +85,12 @@ class _TaskTileState extends State<TaskTile>
                     ),
                   ),
                 ),
+                widget.bellIc == true
+                    ? Padding(
+                        padding: EdgeInsets.only(right: 16.w),
+                        child: Icon(Icons.notifications_active),
+                      )
+                    : SizedBox.shrink(),
                 Padding(
                   padding: EdgeInsets.only(right: 16.w),
                   child: GestureDetector(

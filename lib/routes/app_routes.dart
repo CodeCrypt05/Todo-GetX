@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get/get_navigation/src/routes/default_transitions.dart';
+import 'package:todo_app/pages/reminder/reminder_binding.dart';
+import 'package:todo_app/pages/reminder/reminder_screen.dart';
 import 'package:todo_app/pages/stream_builder/stream_builder_binding.dart';
 import 'package:todo_app/pages/stream_builder/stream_builder_page.dart';
 import 'package:todo_app/pages/add_task/add_task_binding.dart';
@@ -93,10 +95,15 @@ class AppPages {
       binding: OtpBinding(),
     ),
     // initial route
-        GetPage(
+    GetPage(
       name: AppRoutes.streamBuilderPage,
       page: () => StreamBuilderPage(),
       binding: StreamBuilderBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.reminderScreen,
+      page: () => ReminderScreen(),
+      binding: ReminderBinding(),
     ),
   ];
 }

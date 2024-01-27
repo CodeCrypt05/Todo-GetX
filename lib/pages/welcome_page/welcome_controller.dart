@@ -1,25 +1,17 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:todo_app/components/loader.dart';
-import 'package:todo_app/routes/app_page.dart';
+import 'package:todo_app/services/firebase/notification_services.dart';
 
 class WelcomeController extends GetxController {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-
-  // @override
-  // void onInit() async {
-  //   final user = auth.currentUser;
-  //   if (user != null) {
-  //     Utils.showLoader();
-  //     await Future.delayed(Duration(seconds: 1));
-  //     Get.toNamed(AppRoutes.homeScreen);
-  //     Get.back();
-  //   } else {
-  //     Utils.showLoader();
-  //     await Future.delayed(Duration(seconds: 1));
-  //     Get.toNamed(AppRoutes.welcomeScreen);
-  //     Get.back();
-  //   }
-  //   super.onInit();
-  // }
+  NotificationServices notificationServices = NotificationServices();
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    notificationServices.requestNotificationsPermission();
+    notificationServices.firebaseInit();
+    notificationServices.getDevideToken().then((value) => {
+          print("Devide token"),
+          print(value),
+        });
+  }
 }

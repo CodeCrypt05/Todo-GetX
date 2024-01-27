@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:todo_app/components/loader.dart';
 import 'package:todo_app/pages/add_task/add_task_controller.dart';
+import 'package:todo_app/pages/reminder/reminder_controller.dart';
 import 'package:todo_app/theme/colors.dart';
 import 'package:todo_app/theme/text_styles.dart';
 import 'package:todo_app/utils/validation_mixin.dart';
@@ -11,11 +12,11 @@ import 'package:todo_app/widget/common/custom_button.dart';
 import 'package:todo_app/widget/common/custom_textfield.dart';
 import 'package:todo_app/widget/custom_calender.dart';
 
-class AddTaskScreen extends StatelessWidget with ValidationsMixin {
-  AddTaskScreen({super.key});
+class ReminderScreen extends StatelessWidget with ValidationsMixin {
+  ReminderScreen({super.key});
 
   final taskController = Get.find<AddTaskController>();
-  bool bellIc = false;
+  bool bellIc = true;
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +83,8 @@ class AddTaskScreen extends StatelessWidget with ValidationsMixin {
                     color: kColorPrimary,
                     textColor: kColorWhite,
                     label: "Add Task".tr,
-                    press: () async {
-                      Utils.showLoader();
-                      await taskController.onAddTaskClicked(context, bellIc);
-                      Get.back();
+                    press: () {
+                      taskController.checkDateTime(context, bellIc);
                     },
                   ),
                 ),

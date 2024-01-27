@@ -8,7 +8,7 @@ import 'package:todo_app/theme/colors.dart';
 import 'package:todo_app/widget/common/custom_button.dart';
 
 class WelcomeScreen extends StatelessWidget {
-  const WelcomeScreen({super.key});
+  WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

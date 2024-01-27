@@ -7,6 +7,8 @@ import 'package:todo_app/components/home_components/empty_screen.dart';
 import 'package:todo_app/pages/home/home_controller.dart';
 import 'package:todo_app/pages/signin/signin_controller.dart';
 import 'package:todo_app/routes/app_page.dart';
+import 'package:todo_app/services/firebase/firebase_cloud_messaging.dart';
+import 'package:todo_app/services/firebase/notification_services.dart';
 import 'package:todo_app/theme/colors.dart';
 
 import 'package:todo_app/widget/appdrawer.dart';
@@ -18,10 +20,11 @@ class HomeScreen extends StatelessWidget {
 
   final homeController = Get.find<HomeController>();
   // final homeController = Get.put(HomeController());
-
   // final signinController = Get.find<SigninController>();
-
   final signinController = Get.put(SigninController());
+
+  final FirebaseCloudMessaging firebaseCloudMessaging =
+      FirebaseCloudMessaging();
 
   final player = AudioPlayer();
 
@@ -42,7 +45,7 @@ class HomeScreen extends StatelessWidget {
         .doc(signinController.auth.currentUser!.uid)
         .collection('notes')
         .orderBy(
-          'currentTime',
+          'isCompleted',
         );
 
     return Scaffold(
@@ -90,10 +93,15 @@ class HomeScreen extends StatelessWidget {
                           bool isCompleted = data['isCompleted'];
                           String time = data['time'];
                           String date = data['date'];
+                          bool isBellIc = data['bellIC'];
 
                           QueryDocumentSnapshot documentSnapshot =
                               snapshot.data!.docs[index];
                           String docID = documentSnapshot.reference.id;
+
+                          // Schedule notification using NotificationService
+                          // firebaseCloudMessaging
+                          //     .scheduleNotification(documentSnapshot);
 
                           return Dismissible(
                             key: Key(docID),
@@ -134,6 +142,7 @@ class HomeScreen extends StatelessWidget {
                                     .doc(docID)
                                     .delete();
                               },
+                              bellIc: isBellIc,
                             ),
                           );
                         },

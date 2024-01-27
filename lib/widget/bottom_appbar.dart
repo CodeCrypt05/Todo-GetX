@@ -29,7 +29,7 @@ class BottomAppbarWidget extends StatelessWidget {
                 Icons.calendar_month_outlined,
                 size: 24.h,
               ),
-              onPressed: () {},
+              onPressed: () => Get.toNamed(AppRoutes.reminderScreen),
             ),
             SizedBox(width: 32.w),
             IconButton(
